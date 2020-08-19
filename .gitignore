@@ -1,0 +1,26 @@
+# Created by .ignore support plugin (hsz.mobi)
+# Created by https://www.gitignore.io/api/visualstudiocode
+# Edit at https://www.gitignore.io/?templates=visualstudiocode
+
+### VisualStudioCode ###
+.vscode/*
+.idea/*
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+env/*
+venv/*
+
+### Django ###
+*.log
+*.pot
+*.pyc
+*/migrations/*
+media/*
+db.sqlite3
+db.sqlite3-journal
+
+# End of https://www.gitignore.io/api/visualstudio
+
