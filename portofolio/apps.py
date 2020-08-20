@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class ELearningConfig(AppConfig):
+class PortofolioConfig(AppConfig):
     name = 'portofolio'

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.serializers import LandingPageSerializer, SkillCatSerializer, SkillSerializer, EducationSerializer, ExperienceSerializer, BlogCatSerializer, BlogSerializer, GallerySerializer
-from portofolio.models import LandingPage, SkillCat, Skill, Education, Experience, BlogCat, Blog, Gallery
+from portofolio.models.models import LandingPage, SkillCat, Skill, Education, Experience, BlogCat, Blog, Gallery
 
 
 class LandingPageViewSet(viewsets.ModelViewSet):
@@ -13,7 +13,7 @@ class LandingPageViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows LandingPage to be viewed or edited.
     """
-    queryset = LandingPage.objects.all().order_by('-createDate')
+    queryset = LandingPage.objects.all().order_by('-create_date')
     serializer_class = LandingPageSerializer   
 
 

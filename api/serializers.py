@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from portofolio.models import LandingPage, SkillCat, Skill, Education, Experience, BlogCat, Blog, Gallery
+from portofolio.models.models import LandingPage, SkillCat, Skill, Education, Experience, BlogCat, Blog, Gallery
 
 
 class LandingPageSerializer(serializers.HyperlinkedModelSerializer):

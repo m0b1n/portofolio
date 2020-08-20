@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from datetime import datetime
 
-from portofolio.models import MyUser
+from .models.user import MyUser
 from django.contrib.auth.models import Permission
 import logging
 

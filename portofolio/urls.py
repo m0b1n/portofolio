@@ -18,24 +18,13 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-sitemaps = {
-    'news': NewsSitemap, 'aboutus': AboutUsViewSitemap, 'cats': CatsViewSitemap, 'all_cats': AllCatsSitemap
-}
+from portofolio import settings
 
 urlpatterns = [
     path('honeyboney/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-         name='django.contrib.sitemaps.views.sitemap')
+    path('api/', include('api.urls'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-handler404 = 'portofolio.views.error_handlers.page_not_found_view'
-handler500 = 'portofolio.views.error_handlers.error_view'
-handler403 = 'portofolio.views.error_handlers.permission_denied_view'
-handler400 = 'portofolio.views.error_handlers.bad_request_view'
 
