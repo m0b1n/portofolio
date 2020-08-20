@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.shortcuts import reverse
 
-from portofolio.models import Blog
+from .models.models import Blog
 
 
 class BlogSitemap(Sitemap):

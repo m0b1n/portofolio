@@ -20,6 +20,12 @@ from django.contrib.staticfiles.urls import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from portofolio import settings
 
+from portofolio.sitemaps import BlogSitemap
+
+sitemaps = {
+    'blogs': BlogSitemap,
+}
+
 urlpatterns = [
     path('honeyboney/', admin.site.urls),
     path('api/', include('api.urls'))

@@ -8,6 +8,7 @@ from datetime import datetime
 from .models.user import MyUser
 from django.contrib.auth.models import Permission
 import logging
+from .models.models import *
 
 
 logger = logging.getLogger('django')
@@ -17,20 +18,23 @@ class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password2 = forms.CharField(
+        label='Password confirmation', widget=forms.PasswordInput)
     full_name = forms.CharField(label='Full Name')
     date_of_birth = forms.DateTimeInput()
 
-    def __init__(self, *args, **kwargs): 
-        super(UserCreationForm, self).__init__(*args, **kwargs) 
-        self.fields['full_name'] = forms.CharField(label=("Full Name"), max_length=75)
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['full_name'] = forms.CharField(
+            label=("Full Name"), max_length=75)
 
     class Meta:
         model = MyUser
-        fields = ('full_name', 'phone_number', 'date_of_birth','groups', 'password1', 'password2')
+        fields = ('full_name', 'phone_number', 'date_of_birth',
+                  'groups', 'password1', 'password2')
         labels = {
-        "date_of_birth": "Birth Date"
-    }
+            "date_of_birth": "Birth Date"
+        }
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -48,8 +52,7 @@ class UserCreationForm(forms.ModelForm):
         user.last_name = self.cleaned_data.get("full_name").split(' ')[1]
         if commit:
             user.save()
-        
-        
+
         # grp = self.cleaned_data.get("groups")
         # logger.info(user.id)
         # for g in grp:
@@ -61,8 +64,7 @@ class UserCreationForm(forms.ModelForm):
         #         # logger.info(per.id)
         #         # user.user_permissions.add(per)
         #     user.user_permissions.add(*pers)
-            
-        
+
         return user
 
 
@@ -75,7 +77,8 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('email', 'password', 'date_of_birth', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'date_of_birth',
+                  'is_active', 'is_admin')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -93,24 +96,26 @@ class UserAdmin(BaseUserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = ('phone_number', 'user_name', 'date_of_birth', 'is_admin')
-    list_filter = ('is_admin','date_of_birth')
+    list_filter = ('is_admin', 'date_of_birth')
     fieldsets = (
         (None, {'fields': ('user_name', 'password')}),
-        ('Personal info', {'fields': ('first_name','last_name','email','phone_number', 'date_of_birth')}),
+        ('Personal info', {'fields': (
+            'first_name', 'last_name', 'email', 'phone_number', 'date_of_birth')}),
         ('Permissions', {'fields': ('user_permissions', 'groups')}),
-        ('Status', {'fields': ('is_active','is_admin','is_superuser')}),
+        ('Status', {'fields': ('is_active', 'is_admin', 'is_superuser')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('full_name', 'phone_number', 'date_of_birth','groups', 'password1', 'password2'),
+            'fields': ('full_name', 'phone_number', 'date_of_birth', 'groups', 'password1', 'password2'),
         }),
     )
     search_fields = ('phone_number',)
     ordering = ('phone_number',)
     filter_horizontal = ()
+
 
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
@@ -118,3 +123,12 @@ admin.site.register(MyUser, UserAdmin)
 # unregister the Group model from admin.
 # admin.site.unregister(Group)
 admin.site.register(Permission)
+
+admin.site.register(Blog)
+admin.site.register(BlogCat)
+admin.site.register(LandingPage)
+admin.site.register(SkillCat)
+admin.site.register(Skill)
+admin.site.register(Education)
+admin.site.register(Experience)
+admin.site.register(Gallery)
