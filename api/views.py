@@ -10,12 +10,18 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.decorators import action
 
 from api.serializers import LandingPageSerializer, SkillCatSerializer, SkillSerializer, EducationSerializer, ExperienceSerializer, BlogCatSerializer, BlogSerializer, GallerySerializer, UserSerializer, ResponseMessageSerializer
+from api.serializers import MyUserSerializer
 from portofolio.models.models import LandingPage, SkillCat, Skill, Education, Experience, BlogCat, Blog, Gallery
 from portofolio.models.user import MyUser
 
 from .models import ResponseMessage
 from pytz import unicode
 from rest_framework.generics import get_object_or_404
+import logging
+
+from django.contrib.auth import authenticate, login, logout
+
+logger = logging.getLogger('django.server')
 
 
 @api_view(['GET'])
@@ -80,19 +86,38 @@ class UserViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class UserCountView(APIView):
+class UserLogin(APIView):
     """
     A view that returns the count of active users in JSON.
     """
-    renderer_classes = [JSONRenderer]
+
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request, format=None):
-        user_count = MyUser.objects.all()
-        serializer = UserSerializer(
-            user_count, many=True, context={'request': request})
-        content = {'user_count': serializer}
-        return Response(content)
+    def post(self, request, format=None):
+
+        logger.info(request.data)
+        serializer = MyUserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = authenticate(
+                phone_number=serializer.data['username'], password=serializer.data['password'])
+            if user is not None:
+                # A backend authenticated the credentials
+                comment = ResponseMessage(
+                    message='مشخصات کاربر', exception=Exception('User Found'), status=status.HTTP_200_OK, content=UserSerializer(user).data)
+                msgserializer = ResponseMessageSerializer(comment)
+                login(request, user)
+                return Response(msgserializer.data)
+            else:
+                # No backend authenticated the credentials
+                logger.info('user is None')
+                logout(request)
+                comment = ResponseMessage(
+                    message='یوزری با این مشخصات پیدا نشد', exception=Exception('No User Found'), status=status.HTTP_404_NOT_FOUND, content=request.data)
+                msgserializer = ResponseMessageSerializer(comment)
+                return Response(msgserializer.data)
+
+        return Response(serializer.data)
 
 
 class SnippetList(APIView):

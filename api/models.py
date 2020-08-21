@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class ResponseMessage:
-    def __init__(self, message,  exception, content, status, created=None):
+    def __init__(self, message,  exception, content=None, status=None, created=None):
         self.message = message
         self.content = content
         self.created = created or datetime.now()

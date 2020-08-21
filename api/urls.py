@@ -40,11 +40,8 @@ urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(),
          name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('user/', views.ListUsers.as_view(), name='user'),
-    path('users/', views.hello_world, name='users'),
-    path('userscount/', views.UserCountView.as_view(), name='usercount'),
-    path('l/', views.SnippetList.as_view(), name='l'),
-    path('example_view/', views.example_view, name='example_view'),
+
+    path('userlogin', views.UserLogin.as_view(), name='user-login'),
 
     path('gallery-list/', galleryList, name="gallery-list"),
     path('gallery-detail/<str:pk>/', galleryDetail, name="gallery-detail"),
@@ -72,3 +69,5 @@ urlpatterns = [
     path('skillcat-list/', skillCatList, name="skillcat-list"),
     path('skillcat-detail/<str:pk>/', skillCatDetail, name="skillcat-detail"),
 ]
+
+urlpatterns += router.urls

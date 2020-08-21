@@ -8,16 +8,27 @@ from .models import ResponseMessage
 
 class ResponseMessageSerializer(serializers.Serializer):
     message = serializers.CharField(max_length=200)
-    content = serializers.SerializerMethodField()
+    content = serializers.JSONField()
     created = serializers.DateTimeField()
     exception = serializers.StringRelatedField()
     status = serializers.CharField(max_length=200)
 
 
+class MyUserSerializer(serializers.Serializer):
+    username = serializers.CharField(
+        max_length=20,
+        style={'placeholder': 'username', 'autofocus': True})
+    password = serializers.CharField(
+        max_length=20,
+        style={'input_type': 'password', 'placeholder': 'Password'}
+    )
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('id', 'password')
 
 
 class LandingPageSerializer(serializers.HyperlinkedModelSerializer):
