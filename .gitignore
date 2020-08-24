@@ -1,0 +1,46 @@
+# Created by .ignore support plugin (hsz.mobi)
+# Created by https://www.gitignore.io/api/visualstudiocode
+# Edit at https://www.gitignore.io/?templates=visualstudiocode
+
+### VisualStudioCode ###
+.vscode/*
+.idea/*
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+env/*
+venv/*
+
+### Django ###
+*.log
+*.pot
+*.pyc
+*/migrations/*
+media/*
+db.sqlite3
+db.sqlite3-journal
+
+# End of https://www.gitignore.io/api/visualstudio
+
+my-app/node_modules
+my-app/.pnp
+my-app/.pnp.js
+
+# testing
+my-app/coverage
+
+# production
+my-app/build
+
+# misc
+my-app/.DS_Store
+my-app/.env.local
+my-app/.env.development.local
+my-app/.env.test.local
+my-app/.env.production.local
+
+my-app/npm-debug.log*
+my-app/yarn-debug.log*
+my-app/yarn-error.log*
